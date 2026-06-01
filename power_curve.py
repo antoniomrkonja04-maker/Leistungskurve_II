@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def plot_power_curve(df):
     plt.figure(figsize=(10, 6))
     plt.plot(df['duration_s'], df['power_w'], marker='o')
-    plt.xscale('linear')
+    plt.xscale('log')
     plt.xlabel('Duration (s)')
     plt.ylabel('Power (W)')
     plt.title('Power Curve')
