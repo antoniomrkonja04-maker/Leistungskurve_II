@@ -18,7 +18,7 @@ def power_curve(power_data, time_s=1, durations=None):
     durations_total = len(power) * time_s
 
     if durations is None:
-        durations = np.arange(1, durations_total + 1)
+        durations = np.arange(1, durations_total + 1)  
     else:
         durations = np.asarray(durations, dtype=int)
 
