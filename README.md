@@ -96,4 +96,4 @@ Die Power-Curve wird berechnet, indem für jede gewünschte Dauer *t* alle gleit
 
 ---
 
-**Autoren**: Antonio Mrkonja, Noah Reinermann
+**Autoren**: Antonio Mrkonja, Noah Reinermann, Lenn Oßwald
