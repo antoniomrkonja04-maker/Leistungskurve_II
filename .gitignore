@@ -1,53 +1,43 @@
-# Byte-compiled / optimized / DLL files
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+*.venv
+
+# Python cache and compiled files
 __pycache__/
-*.py[codz]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
+*.pyc
+*.pyo
+*.pyd
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+dist/
+build/
 
-# PyInstaller
-#   Usually these files are written by a python script from a template
-#   before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# OS
+.DS_Store
+Thumbs.db
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py.cover
-.hypothesis/
+# PDM
+.pdm-python
+.pdm-backend/
+
+# Result files (but keep activity data)
+power_curve_results.csv
+*.png
+!screenshot.png
+
+# Temporary files
+.DS_Store
+*~
 .pytest_cache/
 cover/
 

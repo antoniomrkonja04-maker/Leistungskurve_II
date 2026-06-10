@@ -1,7 +1,7 @@
 [project]
 name = "Leistungskurve_II"
-version = "pdm add numpy pandas matplotlib scipy"
-description = "Default template for PDM package"
+version = "1.0.0"
+description = "Power Curve Analysis - compute and visualize power curves from activity data"
 authors = [
     {name = "Antonio Mrkonja", email = "antoniomrkonja04@gmail.com"},
 ]

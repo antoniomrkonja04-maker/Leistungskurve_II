@@ -15,7 +15,7 @@ def find_power_column(df):
     return next((col for col in POWER_COLUMNS if col in df.columns), None)
 
 
-def process_activity(input_path=None, output_path=None, time_s=1, tick_step=None, tick_style=None):
+def process_activity(input_path=None, output_path=None, time_s=1, tick_step=None, tick_style=None, save_plot=False):
     """Read activity data, compute power curve and save results."""
     if input_path is None:
         input_file = Path("activity.csv")
@@ -37,7 +37,7 @@ def process_activity(input_path=None, output_path=None, time_s=1, tick_step=None
     if power.empty:
         raise ValueError(f"No valid power values in '{power_col}'")
 
-    result_df = power_curve(power, time_s=time_s, tick_step=tick_step, tick_style=tick_style)
+    result_df = power_curve(power, time_s=time_s, tick_step=tick_step, tick_style=tick_style, save_plot=save_plot)
 
     if output_path is None:
         output_path = Path("power_curve_results.csv")

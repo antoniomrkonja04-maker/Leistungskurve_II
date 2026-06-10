@@ -1,54 +1,133 @@
-# Leistungskurve_II
+# Leistungskurve II - Power Curve Analysis
 
-Dieses Projekt berechnet und visualisiert eine Leistungszeitkurve (Power Curve) auf Basis von Leistungswerten über die Zeit.
+Ein Python-Projekt zur Berechnung und Visualisierung von Leistungskurven aus Aktivitätsdaten.
 
-## Dateien
+## Beschreibung
 
-- `power_curve.py`: Enthält die Funktion `power_curve`, die aus einer Liste von Leistungsdaten die maximale durchschnittliche Leistung für verschiedene Zeitdauern berechnet und die Kurve darstellt.
-- `main.py`: Projektstartpunkt oder Beispielskript.
-- `activity.csv`: Datendatei mit Aktivitätsdaten (falls vorhanden).
-- `pyproject.toml`: Projektkonfiguration und Abhängigkeiten.
+Dieses Projekt analysiert Leistungsdaten (in Watt) und erstellt eine **Power-Curve**, die die maximale durchschnittliche Leistung für verschiedene Zeitdauern zeigt. Die Power-Curve ist ein wichtiges Werkzeug zur Analyse von sportlichen Leistungen, insbesondere beim Radfahren.
 
-## Anforderungen
+### Funktionen
 
-- Python 3.9 oder neuer
-- pandas
-- numpy
-- matplotlib
+- **Flexible Eingabe**: Unterstützt Pandas Series und NumPy Arrays
+- **Konfigurierbare Auflösung**: Anpassbare zeitliche Auflösung (z.B. 1 Sekunde pro Sample)
+- **DataFrame-Ausgabe**: Ergebnis enthält Dauer (Sekunden) und Leistung (Watt)
+- **Automatische Visualisierung**: Erstellt einen professionellen Plot der Power-Curve
 
-## Installation
+## Installation und Setup
 
-1. Virtuelle Umgebung erstellen und aktivieren:
+### Voraussetzungen
+- Python 3.9+
+- **PDM** (Python Dependency Manager)
 
-```powershell
-python -m venv .venv
+### Schritt-für-Schritt Installation
+
+**1. PDM installieren** (falls noch nicht vorhanden)
+```bash
+pip install pdm
+```
+
+**2. In das Projektverzeichnis navigieren**
+```bash
+cd Leistungskurve_II
+```
+
+**3. Abhängigkeiten mit PDM installieren**
+```bash
+pdm install
+```
+
+Dies erstellt automatisch eine virtuelle Umgebung `.venv/` und installiert alle Abhängigkeiten.
+
+**4. Virtuelle Umgebung aktivieren** (optional, wird oft automatisch aktiviert)
+```bash
 .\.venv\Scripts\activate
 ```
 
-2. Abhängigkeiten installieren:
+## Verwendung
 
-```powershell
-pip install pandas numpy matplotlib
+### Programm starten
+
+```bash
+pdm run python main.py
 ```
 
-## Nutzung
+Dies wird:
+1. `data/activity.csv` einlesen
+2. Die Power-Curve berechnen
+3. Ein Diagramm anzeigen
+4. Ergebnisse in `power_curve_results.csv` speichern
 
-Um die Leistungszeitkurve zu berechnen und anzuzeigen, starte das Skript oder importiere `power_curve`:
+### Manuelle Verwendung in Python
 
-```powershell
-python -c "from power_curve import power_curve; power_curve([100, 200, 150, 120], time_s=1)"
+```python
+from source.app import process_activity
+from source.power_curve import power_curve
+import pandas as pd
+
+# Option 1: Direkt aus CSV
+df = process_activity("data/activity.csv", time_s=1)
+
+# Option 2: Mit eigenen Daten
+power_data = pd.Series([100, 150, 200, 180, ...])
+result_df = power_curve(power_data, time_s=1)
 ```
 
-Alternativ kannst du `power_curve.py` direkt ausführen, wenn dort ein entsprechender Aufruf im `__main__`-Block hinterlegt ist.
+## Power-Curve Beispiel
 
-## Funktion
+Das Diagramm zeigt die Beziehung zwischen Dauer und maximaler durchschnittlicher Leistung:
 
-Die Funktion `power_curve`:
+- **X-Achse**: Zeit in Format mm:ss oder hh:mm:ss
+- **Y-Achse**: Maximale durchschnittliche Leistung in Watt
+- **Kurvenform**: Typischerweise fallend (höhere Leistungen bei kürzeren Dauern)
 
-- nimmt Leistungswerte (`power_data`) und eine Zeitauflösung (`time_s`) entgegen
-- berechnet für verschiedene Zeitdauern den höchsten gleitenden Durchschnitt
-- erstellt ein Diagramm mit Dauer auf der x-Achse und Leistung auf der y-Achse
+## Parameter
+
+### `power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style=None, marker_size=6, minor_ticks=True)`
+
+- **power_data**: Leistungsdaten als Pandas Series oder NumPy Array (Watt)
+- **time_s**: Zeitliche Auflösung pro Sample in Sekunden (Standard: 1)
+- **durations**: Spezifische Dauern für die Berechnung (Standard: automatisch)
+- **tick_step**: Abstände für X-Achsen-Markierungen
+- **tick_style**: `'series'` für 1-2-5 Tickstyle
+- **marker_size**: Größe der Marker (Standard: 6)
+- **minor_ticks**: Neben-Markierungen aktivieren (Standard: True)
+
+### `process_activity(input_path=None, output_path=None, time_s=1, ...)`
+
+- **input_path**: CSV-Pfad (Standard: `activity.csv` oder `data/activity.csv`)
+- **output_path**: Ausgabedatei (Standard: `power_curve_results.csv`)
+- **time_s**: Zeitliche Auflösung in Sekunden
+
+## Eingabedaten-Format
+
+Die CSV-Datei muss eine Leistungsspalte enthalten. Unterstützte Namen:
+- `PowerOriginal`
+- `CalculatedAerobicEfficiencyPower`
+- `power`
+- `watts`
+- `power_w`
+
+## Projektstruktur
+
+```
+Leistungskurve_II/
+├── main.py                      # Einstiegspunkt
+├── source/
+│   ├── __init__.py
+│   ├── app.py                   # Anwendungslogik
+│   └── power_curve.py           # Power-Curve Berechnung
+├── data/
+│   └── activity.csv             # Input-Daten
+├── pyproject.toml               # PDM Projekt-Konfiguration
+├── README.md                    # Dieses Dokument
+└── .gitignore                   # Git Ignores
+```
 
 ## Lizenz
 
-Projekt ohne spezifische Lizenzangabe. Bei Bedarf kannst du eine passende Lizenz ergänzen.
+MIT
+
+---
+
+**Autor**: Antonio Mrkonja  
+**Version**: 1.0.0

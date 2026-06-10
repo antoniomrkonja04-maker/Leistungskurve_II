@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import ticker
 
 
-def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style=None, marker_size=6, minor_ticks=True):
+def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style=None, marker_size=6, minor_ticks=True, save_plot=False):
     """Compute the power curve and plot duration vs. maximum average power.
 
     Parameters
@@ -13,6 +13,7 @@ def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style
     - durations: optional sequence of durations (seconds) to evaluate
     - tick_step: spacing for x-axis ticks in seconds (None -> automatic)
     - tick_style: 'series' for 1-2-5 ticks
+    - save_plot: if True, save plot as 'screenshot.png'
     """
     power = np.asarray(power_data, dtype=float)
     max_duration = len(power) * time_s
@@ -58,11 +59,11 @@ def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style
             tick_step = max(time_s, 1.0)
         xticks = np.arange(durations.min(), durations.max() + tick_step, tick_step)
 
-    plot_power_curve(df, xticks=xticks, time_s=time_s, marker_size=marker_size, minor_ticks=minor_ticks)
+    plot_power_curve(df, xticks=xticks, time_s=time_s, marker_size=marker_size, minor_ticks=minor_ticks, save_plot=save_plot)
     return df
 
 
-def plot_power_curve(df, xticks=None, time_s=1, marker_size=6, minor_ticks=True):
+def plot_power_curve(df, xticks=None, time_s=1, marker_size=6, minor_ticks=True, save_plot=False):
     ax = df.plot(x='duration_s', y='power_w', marker='o', figsize=(10, 6), grid=True, title='Power Curve', markersize=marker_size)
     ax.set_xlabel('Duration (s)')
     ax.set_ylabel('Power (W)')
@@ -91,4 +92,7 @@ def plot_power_curve(df, xticks=None, time_s=1, marker_size=6, minor_ticks=True)
         ax.xaxis.set_minor_locator(ticker.MultipleLocator(minor_step))
         ax.grid(which='minor', linestyle=':', alpha=0.4)
     plt.tight_layout()
+    if save_plot:
+        plt.savefig('screenshot.png', dpi=150, bbox_inches='tight')
+        print("Plot saved as 'screenshot.png'")
     plt.show()
