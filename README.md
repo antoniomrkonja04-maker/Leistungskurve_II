@@ -6,6 +6,8 @@ Ein Python-Projekt zur Berechnung und Visualisierung von Leistungskurven aus Akt
 
 Dieses Projekt analysiert Leistungsdaten (in Watt) und erstellt eine **Power-Curve**, die die maximale durchschnittliche Leistung für verschiedene Zeitdauern zeigt. Die Power-Curve ist ein wichtiges Werkzeug zur Analyse von sportlichen Leistungen, insbesondere beim Radfahren.
 
+![Power Curve Screenshot](screenshot.png)
+
 ### Funktionen
 
 - **Flexible Eingabe**: Unterstützt Pandas Series und NumPy Arrays
@@ -76,7 +78,7 @@ result_df = power_curve(power_data, time_s=1)
 
 Das Diagramm zeigt die Beziehung zwischen Dauer und maximaler durchschnittlicher Leistung:
 
-- **X-Achse**: Zeit in Format mm:ss oder hh:mm:ss
+- **X-Achse**: Zeit in Format (s, min, h) mit logarithmischer Skalierung
 - **Y-Achse**: Maximale durchschnittliche Leistung in Watt
 - **Kurvenform**: Typischerweise fallend (höhere Leistungen bei kürzeren Dauern)
 

@@ -64,35 +64,50 @@ def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style
 
 
 def plot_power_curve(df, xticks=None, time_s=1, marker_size=3, minor_ticks=True, save_plot=False):
-    ax = df.plot(x='duration_s', y='power_w', marker='o', figsize=(10, 6), grid=True, title='Power Curve', markersize=marker_size)
-    ax.set_xlabel('Duration (s)')
-    ax.set_ylabel('Power (W)')
-    if xticks is not None and len(xticks) > 1:
-        ax.set_xticks(xticks)
-        # format tick labels as time strings (mm:ss or hh:mm:ss)
-        def sec_to_str(s):
-            s = int(round(s))
-            h, rem = divmod(s, 3600)
-            m, sec = divmod(rem, 60)
-            if h > 0:
-                return f"{h}:{m:02d}:{sec:02d}"
-            else:
-                return f"{m}:{sec:02d}"
-
-        labels = [sec_to_str(x) for x in xticks]
-        ax.set_xticklabels(labels)
-    # add minor ticks for better resolution of points
-    if minor_ticks:
-        # choose a reasonable minor step: half of the major spacing, but at least time_s
-        if len(xticks) > 1:
-            major_step = float(xticks[1] - xticks[0])
+    """Plot power curve with logarithmic x-axis for better visualization."""
+    fig, ax = plt.subplots(figsize=(16, 8))
+    
+    # Plot with logarithmic x-axis only (semilogx)
+    ax.semilogx(df['duration_s'], df['power_w'], marker='o', markersize=marker_size, 
+                linestyle='-', linewidth=2, color='#1f77b4', label='Power Curve')
+    
+    ax.set_xlabel('Duration (seconds)', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Power (Watts)', fontsize=12, fontweight='bold')
+    ax.set_title('Power Curve - Logarithmic Scale', fontsize=14, fontweight='bold')
+    
+    # Format x-axis with time strings
+    def sec_to_str(s):
+        s = int(round(s))
+        h, rem = divmod(s, 3600)
+        m, sec = divmod(rem, 60)
+        
+        if h > 0:
+            return f"{h}:{m:02d}:{sec:02d} h"
+        elif m > 0:
+            return f"{m}:{sec:02d} min"
         else:
-            major_step = max(1.0, time_s)
-        minor_step = max(time_s, major_step / 2.0)
-        ax.xaxis.set_minor_locator(ticker.MultipleLocator(minor_step))
-        ax.grid(which='minor', linestyle=':', alpha=0.4)
+            return f"{sec}s"
+    
+    # Set custom ticks for logarithmic scale
+    log_ticks = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 30000]
+    available_ticks = [t for t in log_ticks if t >= df['duration_s'].min() and t <= df['duration_s'].max()]
+    
+    if available_ticks:
+        ax.set_xticks(available_ticks)
+        ax.set_xticklabels([sec_to_str(t) for t in available_ticks], rotation=0)
+    
+    # Add grid
+    ax.grid(True, which='both', linestyle='-', alpha=0.3, linewidth=0.8)
+    ax.grid(True, which='minor', linestyle=':', alpha=0.2)
+    
+    # Add legend
+    ax.legend(fontsize=10, loc='upper right')
+    
+    # Improve layout
     plt.tight_layout()
+    
     if save_plot:
         plt.savefig('screenshot.png', dpi=150, bbox_inches='tight')
         print("Plot saved as 'screenshot.png'")
+    
     plt.show()
