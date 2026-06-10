@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import ticker
 
 
-def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style=None, marker_size=6, minor_ticks=True, save_plot=False):
+def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style=None, marker_size=3, minor_ticks=True, save_plot=False):
     """Compute the power curve and plot duration vs. maximum average power.
 
     Parameters
@@ -63,7 +63,7 @@ def power_curve(power_data, time_s=1, durations=None, tick_step=None, tick_style
     return df
 
 
-def plot_power_curve(df, xticks=None, time_s=1, marker_size=6, minor_ticks=True, save_plot=False):
+def plot_power_curve(df, xticks=None, time_s=1, marker_size=3, minor_ticks=True, save_plot=False):
     ax = df.plot(x='duration_s', y='power_w', marker='o', figsize=(10, 6), grid=True, title='Power Curve', markersize=marker_size)
     ax.set_xlabel('Duration (s)')
     ax.set_ylabel('Power (W)')
